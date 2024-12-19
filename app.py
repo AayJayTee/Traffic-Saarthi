@@ -238,7 +238,7 @@ elif selected == "Yolo Real Time Congestion":
             congestion_level, num_detections = predict_congestion(results)
             
             # Display the image with bounding boxes
-            st.image(results[0].plot(), caption=f"{congestion_level} ({num_detections} vehicles detected)", use_column_width=True)
+            st.image(results[0].plot(), caption=f"{congestion_level} ({num_detections} vehicles detected)", use_container_width=True)
             st.write(f"Congestion Level: {congestion_level}")
             st.write(f"Number of Vehicles Detected: {num_detections}")
 
