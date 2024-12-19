@@ -113,7 +113,7 @@ with st.sidebar:
 
 if selected == "Home":
     st.title("Welcome to Traffic Saarthi")
-    st.write("This webapp allows you to optimize routes and get real-time congestion predictions using YOLO V8.")
+    st.write("This webapp allows you to optimize routes and get real-time congestion predictions using YOLO V6.")
     st.write("Use the sidebar to navigate to the Route Optimization page.")
     st.image("image0_0.jpg", width=600)
 
