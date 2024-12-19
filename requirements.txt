@@ -9,3 +9,5 @@ ultralytics==8.0.7
 geocoder==1.38.1
 python-dotenv==0.21.0
 setuptools==67.8.0
+wheel==0.38.4
+
