@@ -1,0 +1,4 @@
+# Ignore files that contain sensitive API keys
+route_data.json
+user_data.json
+*.env
