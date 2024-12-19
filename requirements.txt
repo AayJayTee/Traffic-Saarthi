@@ -1,13 +1,20 @@
-streamlit==1.22.0
+# Streamlit and related libraries
+streamlit>=1.22,<2.0
 requests==2.28.2
 folium==0.14.0
 streamlit-folium==0.11.0
 streamlit-option-menu==0.3.1
-opencv-python-headless==4.7.0.72
-numpy==1.25.2
-ultralytics==8.0.7
+
+# OpenCV for image processing (headless version)
+opencv-python-headless>=4.7,<5
+
+# Other dependencies
+numpy>=1.25,<2  # Ensure compatibility with other libraries
+ultralytics>=8,<9  # Check compatibility with YOLO models
 geocoder==1.38.1
 python-dotenv==0.21.0
-setuptools==67.8.0
-wheel==0.38.4
+
+# Packaging tools
+setuptools>=67,<68  # Keep updated for packaging purposes
+wheel>=0.38,<1  # Keep updated for packaging purposes
 
