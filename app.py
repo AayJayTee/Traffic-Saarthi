@@ -13,16 +13,10 @@ import numpy as np
 from ultralytics import YOLO
 import tempfile
 from io import BytesIO
-from dotenv import load_dotenv
-import os
-
-# Load environment variables from .env file
-load_dotenv()
 
 # Load the YOLO model
 model = YOLO("trained_model.pt")
-# Get the API key from environment variables
-APIKEY = os.getenv('APIKEY')
+APIKEY=836hjeGZtIvmzl6ywJgL7IVnDoKJGeVk
 ROUTE_DATA_FILE = 'route_data.json'
 USER_DATA_FILE = 'user_data.json'
 
