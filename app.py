@@ -16,7 +16,7 @@ from io import BytesIO
 
 # Load the YOLO model
 model = YOLO("trained_model.pt")
-APIKEY=836hjeGZtIvmzl6ywJgL7IVnDoKJGeVk
+APIKEY="836hjeGZtIvmzl6ywJgL7IVnDoKJGeVk"
 ROUTE_DATA_FILE = 'route_data.json'
 USER_DATA_FILE = 'user_data.json'
 
