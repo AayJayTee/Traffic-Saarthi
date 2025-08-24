@@ -113,9 +113,25 @@ with st.sidebar:
 
 if selected == "Home":
     st.title("Welcome to Traffic Saarthi")
-    st.write("This webapp allows you to optimize routes and get real-time congestion predictions using YOLO V6.")
-    st.write("Use the sidebar to navigate to the Route Optimization page.")
+    st.markdown("#### Your AI-powered Traffic Monitoring Assistant")
+    st.markdown("""
+        Traffic-Saarthi uses **YOLOv4 + Deep Learning** to detect vehicles in real time, 
+        analyze traffic congestion, and provide route-based insights.
+
+        💡 Use this app to:
+        - Detect vehicles in uploaded images/videos.
+        - Track congestion across different routes.
+        - Visualize traffic data with graphs and insights.
+    """)
     st.image("image0_0.jpg", width=600)
+    st.write("Use the sidebar to navigate to the Route Optimization page.")
+    st.markdown("📌 How to Use")
+    st.write("""
+        1. Upload an **image or video** of traffic.  
+        2. Select your **route/region** from the dropdown.  
+        3. View **vehicle detections** with bounding boxes.  
+        4. Explore **traffic analysis graphs**.  
+    """)
 
 
 elif selected == "Route Optimization":
@@ -227,20 +243,21 @@ elif selected == "Yolo Real Time Congestion":
     
     if uploaded_file is not None:
         if uploaded_file.type in ["image/jpg", "image/jpeg", "image/png"]:
-            # If an image is uploaded, process the image
-            img = np.array(bytearray(uploaded_file.read()), dtype=np.uint8)
-            img = cv2.imdecode(img, 1)
-            
-            # Run YOLO model on the image
-            results = model.predict(img)
+            if st.button("Predict Congestion", key="predict_video"):
+                # If an image is uploaded, process the image
+                img = np.array(bytearray(uploaded_file.read()), dtype=np.uint8)
+                img = cv2.imdecode(img, 1)
+                
+                # Run YOLO model on the image
+                results = model.predict(img)
 
-            # Count detections and classify congestion
-            congestion_level, num_detections = predict_congestion(results)
-            
-            # Display the image with bounding boxes
-            st.image(results[0].plot(), caption=f"{congestion_level} ({num_detections} vehicles detected)", use_container_width=True)
-            st.write(f"Congestion Level: {congestion_level}")
-            st.write(f"Number of Vehicles Detected: {num_detections}")
+                # Count detections and classify congestion
+                congestion_level, num_detections = predict_congestion(results)
+                
+                # Display the image with bounding boxes
+                st.image(results[0].plot(), caption=f"{congestion_level} ({num_detections} vehicles detected)", use_container_width=True)
+                st.write(f"Congestion Level: {congestion_level}")
+                st.write(f"Number of Vehicles Detected: {num_detections}")
 
         elif uploaded_file.type == "video/mp4":
             # Save uploaded video to a temporary file
@@ -268,7 +285,7 @@ elif selected == "Yolo Real Time Congestion":
                 output_path = tempfile.NamedTemporaryFile(delete=False, suffix=".mp4").name
 
                 # Define video writer
-                fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+                fourcc = cv2.VideoWriter_fourcc(*'avc1')
                 out = cv2.VideoWriter(output_path, fourcc, fps, (frame_width, frame_height))
 
                 total_detections = 0
@@ -296,6 +313,10 @@ elif selected == "Yolo Real Time Congestion":
                 cap.release()
                 out.release()
 
+                # Wait for the file to be written completely
+                import time
+                time.sleep(0.5)  # Add a short delay
+
                 # Calculate average detections per frame
                 avg_detections_per_frame = total_detections / frame_count if frame_count > 0 else 0
                 
@@ -303,6 +324,9 @@ elif selected == "Yolo Real Time Congestion":
                 congestion_level = classify_congestion(avg_detections_per_frame)
                 
                 st.success(f"Video processing complete. {congestion_level} ({avg_detections_per_frame:.2f} vehicles per frame on average).")
+
+                # Display processed video in the app
+                st.video(output_path)
 
                 # Provide a download link for the processed video
                 video_bytes = save_video_for_download(output_path)
