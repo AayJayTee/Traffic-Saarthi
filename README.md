@@ -10,7 +10,7 @@ Using YOLOv4 and custom-trained models, it identifies vehicles, tracks traffic f
 - 📊 **Traffic Analysis** – Aggregates counts and flow for specific routes.  
 - ⚡ **YOLOv4 Integration** – High-speed and accurate object detection.  
 - 🗂 **Data Management** – Stores user preferences and route data in JSON files.  
-- 🌐 **Streamlit UI (Optional)** – Interactive interface for visualizing results.  
+- 🌐 **Streamlit UI ** – Interactive interface for visualizing results.  
 
 ---
 
@@ -20,6 +20,4 @@ Using YOLOv4 and custom-trained models, it identifies vehicles, tracks traffic f
 - **Model:** YOLOv4 (custom configuration & weights)  
 - **Data Storage:** JSON files for route and user data  
 
----
 
-## 📂 Repository Structure
