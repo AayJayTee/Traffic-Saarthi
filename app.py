@@ -101,8 +101,8 @@ def predict_congestion(results):
 
 # Function to save video for download
 def save_video_for_download(video_path):
-    with open(video_path, "rb") as f:
-        video_bytes = f.read()
+    with open(video_path, "rb") as video_file:
+        video_bytes = video_file.read()
     return video_bytes
 
 # Streamlit App UI for YOLO Real Time Congestion
@@ -203,7 +203,7 @@ elif selected == "Route Optimization":
                     try:
                         eta = datetime.fromisoformat(arrival_time[:-1]).strftime("%Y-%m-%d %H:%M:%S")
                     except ValueError:
-                        st.error("Error parsing arrival time.")
+                        st.error("Error parsing arrival time")
                         eta = "Unavailable"
 
                     coordinates = [[point['latitude'], point['longitude']] for point in route['points']]
@@ -285,7 +285,7 @@ elif selected == "Yolo Real Time Congestion":
                 output_path = tempfile.NamedTemporaryFile(delete=False, suffix=".mp4").name
 
                 # Define video writer
-                fourcc = cv2.VideoWriter_fourcc(*'avc1')
+                fourcc = cv2.VideoWriter_fourcc(*'mp4v')
                 out = cv2.VideoWriter(output_path, fourcc, fps, (frame_width, frame_height))
 
                 total_detections = 0
@@ -315,7 +315,7 @@ elif selected == "Yolo Real Time Congestion":
 
                 # Wait for the file to be written completely
                 import time
-                time.sleep(0.5)  # Add a short delay
+                time.sleep(1)  # Add a short delay
 
                 # Calculate average detections per frame
                 avg_detections_per_frame = total_detections / frame_count if frame_count > 0 else 0
@@ -326,7 +326,9 @@ elif selected == "Yolo Real Time Congestion":
                 st.success(f"Video processing complete. {congestion_level} ({avg_detections_per_frame:.2f} vehicles per frame on average).")
 
                 # Display processed video in the app
-                st.video(output_path)
+                with open(output_path, "rb") as video_file:
+                    video_bytes = video_file.read()
+                st.video(video_bytes)
 
                 # Provide a download link for the processed video
                 video_bytes = save_video_for_download(output_path)
